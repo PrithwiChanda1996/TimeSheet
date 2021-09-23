@@ -1,0 +1,4 @@
+{
+  "mongoURI": "mongodb+srv://prithwi:prithwi@timesheet.aqnlu.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+  "jwtSecret": "d563b1b252515a5dd752f38a240632ed28144b9bad2eb4d0e2a6d8cd6c75ed4270adc756db70e3317034fe132eed16d6e3fd73855fd7e0d97888b2963ece7f45"
+}
