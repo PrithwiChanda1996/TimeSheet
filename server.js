@@ -9,6 +9,10 @@ connectDB();
 //Init Middleware
 app.use(express.json({ extended: false }));
 
+//Define routes
+app.use("/auth", require("./routes/auth"));
+app.use("/employee", require("./routes/employee"));
+
 const PORT = process.env.PORT || 8000;
 
 app.get("/", (req, res) => {
