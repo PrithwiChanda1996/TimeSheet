@@ -7,6 +7,7 @@ const { check, validationResult } = require("express-validator");
 const auth = require("../middleware/auth");
 
 const Employee = require("../models/Employee");
+const Token = require("../models/Token");
 
 //@route    GET auth
 //@desc     Test route
@@ -67,20 +68,29 @@ router.post(
         },
       };
 
-      jwt.sign(
-        payload,
-        config.get("jwtSecret"),
-        { expiresIn: 360000 },
-        (err, token) => {
-          if (err) throw err;
-          res.json({ token });
-        }
-      );
+      let accessToken = jwt.sign(payload, config.get("jwtSecret"), {
+        expiresIn: 3600,
+      });
+
+      //Token save in database
+      token = new Token({
+        token: accessToken,
+      });
+      await token.save();
+      res.json({ accessToken: accessToken });
     } catch (err) {
       console.error(err.message);
       res.status(500).send("Server error");
     }
   }
 );
+
+//@route    DELETE auth
+//@desc     Delete API token
+//@access   Public
+router.delete("/", auth, async (req, res) => {
+  await Token.findOneAndDelete({ token: req.token });
+  res.json({ msg: "Deleted" });
+});
 
 module.exports = router;
