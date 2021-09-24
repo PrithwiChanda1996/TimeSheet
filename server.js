@@ -12,6 +12,7 @@ app.use(express.json({ extended: false }));
 //Define routes
 app.use("/auth", require("./routes/auth"));
 app.use("/employee", require("./routes/employee"));
+app.use("/timesheet", require("./routes/timesheet"));
 
 const PORT = process.env.PORT || 8000;
 
