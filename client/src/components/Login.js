@@ -4,8 +4,10 @@ import { Form, Button } from "react-bootstrap";
 import { setAlert } from "../actions/alert";
 import { connect } from "react-redux";
 import Alert from "./Alert";
+import { login } from "../actions/auth";
+import { Redirect } from "react-router";
 
-const Login = ({ setAlert }) => {
+const Login = ({ setAlert, login, isAuthenticated }) => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -19,8 +21,13 @@ const Login = ({ setAlert }) => {
   const onSubmit = async (e) => {
     e.preventDefault();
     if (!email || !password) setAlert("Email and Password required", "danger");
-    else console.log(email, password);
+    else login(email, password);
   };
+
+  //Redirect if is logged in
+  if (isAuthenticated) {
+    return <Redirect to="/dashboard" />;
+  }
 
   return (
     <Fragment>
@@ -58,6 +65,12 @@ const Login = ({ setAlert }) => {
 
 Login.propTypes = {
   setAlert: PropTypes.func.isRequired,
+  login: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
 };
 
-export default connect(null, { setAlert })(Login);
+const mapStateTOProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
+
+export default connect(mapStateTOProps, { setAlert, login })(Login);

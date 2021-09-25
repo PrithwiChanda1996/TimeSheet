@@ -77,7 +77,7 @@ router.post(
         token: accessToken,
       });
       await token.save();
-      res.json({ accessToken: accessToken });
+      res.json({ token: accessToken });
     } catch (err) {
       console.error(err.message);
       res.status(500).send("Server error");
