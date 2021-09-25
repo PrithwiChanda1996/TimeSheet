@@ -5,6 +5,21 @@ const auth = require("../middleware/auth");
 
 const Timesheet = require("../models/Timesheet");
 
+//@route    GET timesheet
+//@desc     create a post
+//@access   Private
+router.get("/", auth, async (req, res) => {
+  try {
+    const TimesheetData = await Timesheet.find({
+      employee: req.employee.id,
+    });
+    res.json(TimesheetData);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Server error");
+  }
+});
+
 //@route    POST timesheet
 //@desc     create a post
 //@access   Private
@@ -32,7 +47,10 @@ router.post(
         date: date,
       });
 
-      if (timesheet) return res.status(400).send("Timesheet already updated");
+      if (timesheet)
+        return res
+          .status(400)
+          .json({ errors: [{ msg: "Timesheet already updated" }] });
       timesheet = new Timesheet({
         employee: req.employee.id,
         date,
@@ -43,7 +61,7 @@ router.post(
 
       await timesheet.save();
 
-      res.json(timesheet);
+      res.json({ msg: true });
     } catch (err) {
       console.log(err);
       res.status(500).send("server error");

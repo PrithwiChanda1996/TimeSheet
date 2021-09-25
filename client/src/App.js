@@ -6,6 +6,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Login from "./components/Login";
 import Dashboard from "./components/Dashboard";
+import TimesheetForm from "./components/TimesheetForm";
 import Register from "./components/Register";
 
 //Redux
@@ -23,7 +24,7 @@ if (localStorage.token) {
 const App = () => {
   useEffect(() => {
     store.dispatch(loadUser());
-  }, [loadUser]);
+  }, []);
 
   return (
     <Provider store={store}>
@@ -35,6 +36,11 @@ const App = () => {
               <Route exact path="/" component={Login} />
               <Switch>
                 <PrivateRoute exact path="/dashboard" component={Dashboard} />
+                <PrivateRoute
+                  exact
+                  path="/timesheet"
+                  component={TimesheetForm}
+                />
                 <PrivateRoute exact path="/register" component={Register} />
               </Switch>
             </Container>

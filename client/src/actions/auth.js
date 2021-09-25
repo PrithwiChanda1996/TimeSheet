@@ -63,6 +63,6 @@ export const login = (email, password) => async (dispatch) => {
 
 // Logout
 export const logout = () => async (dispatch) => {
-  const res = await axios.delete("/auth");
+  await axios.delete("/auth");
   dispatch({ type: LOG_OUT });
 };

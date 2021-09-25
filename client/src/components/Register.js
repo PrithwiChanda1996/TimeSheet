@@ -8,10 +8,7 @@ import { setAlert } from "../actions/alert";
 import Alert from "./Alert";
 import { register } from "../actions/register";
 
-const Register = ({
-  register,
-  auth: { isAuthenticated, loading, employee },
-}) => {
+const Register = ({ register, auth: { loading, employee } }) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
