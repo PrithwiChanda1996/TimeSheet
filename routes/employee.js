@@ -65,7 +65,7 @@ router.post(
 
       await employee.save();
 
-      res.json(employee);
+      res.json({ msg: true });
     } catch (err) {
       console.error(err.message);
       res.status(500).send("Server error");

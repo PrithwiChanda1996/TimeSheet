@@ -6,7 +6,6 @@ import {
   USER_LOADED,
   AUTH_ERROR,
   LOG_OUT,
-  CLEAR_PROFILE,
 } from "./types";
 import setAuthToken from "../utils/setAuthToken";
 
@@ -62,8 +61,8 @@ export const login = (email, password) => async (dispatch) => {
   }
 };
 
-// Logout / clear profile
-export const logout = () => (dispatch) => {
+// Logout
+export const logout = () => async (dispatch) => {
+  const res = await axios.delete("/auth");
   dispatch({ type: LOG_OUT });
-  dispatch({ type: CLEAR_PROFILE });
 };
